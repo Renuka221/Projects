@@ -1,0 +1,87 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Recommendation</title>
+    <style>
+        body { font-family: Arial; background:#eef2f7; padding:40px; }
+        .card {
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            max-width:600px;
+            margin:auto;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 { text-align:center; color:#333; margin-bottom:30px; }
+        h3 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .product-list {
+            list-style: none;
+            padding: 0;
+        }
+        .product-list li {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+            font-size: 16px;
+        }
+        .product-list li::before {
+            content: "→ ";
+            color: #007bff;
+            font-weight: bold;
+        }
+        .reason {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 5px;
+            font-style: italic;
+            color: #555;
+        }
+        .links {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>AI Recommendation Section</h2>
+
+    <h3>Recommended For You</h3>
+
+    <ol class="product-list">
+        {% for item in recommendations %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ol>
+
+    <div class="reason">
+        <strong>Reason:</strong> {{ reason }}
+    </div>
+
+    <div class="links">
+        <a href="/dashboard/?id={{ customer_id }}">Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

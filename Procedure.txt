@@ -1,0 +1,11 @@
+1. Open cmd
+2. Enter python manage.py runserver command
+3. After getting 127.0.0.1:8000 copy it and paste it in any web browser you will get the home page
+4. Firstly a person should have to register for XXXXX company
+5. Admin of that company should have to activate the registered person if he want to hire that person to the company
+6. Then owner of the company will add the data of the customers and reviews and all other things
+7. Admin will view all the content which is added by the owner
+8. Now Registered person can login as user and check the sentiment by the user...
+
+
+

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CRM</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1c1c1c, #343434);
+            color: #f0f0f0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f39c12;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            perspective: 800px;
+        }
+
+        .navbar a:hover {
+            background: #f39c12;
+            color: #000;
+            transform: rotateX(10deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.7);
+        }
+
+        .content {
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .content h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            font-size: 18px;
+            color: #ccc;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* 3D effect on hover using JS */
+        .navbar a.animated {
+            transform-style: preserve-3d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-title">CRM</div>
+        <a href="{% url 'main' %}" class="animated">Home</a>
+        <a href="{% url 'admin_login' %}" class="animated">Admin</a>
+        <a href="{% url 'owner_login' %}" class="animated">Owner</a>
+        <a href="{% url 'userlogin' %}" class="animated">User</a>
+        <a href="{%  url 'register' %}" class="animated">Register</a>
+    </div>
+
+    <div class="content">
+        <h1>Welcome to the  Customer Relationship Management(CRM)</h1>
+    </div>
+    {% block content %}
+    {% endblock %}
+
+    <script>
+        // Add subtle tilt effect to navbar links on mouse move
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('mousemove', e => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const deltaX = (x - centerX) / 10;
+                const deltaY = (y - centerY) / 10;
+                link.style.transform = `rotateY(${deltaX}deg) rotateX(${-deltaY}deg) scale(1.05)`;
+            });
+
+            link.addEventListener('mouseleave', () => {
+                link.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+            });
+        });
+    </script>
+
+</body>
+</html>

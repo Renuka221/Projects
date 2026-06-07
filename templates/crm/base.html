@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRM Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            box-shadow: 0 8px 6px -6px rgba(0,0,0,0.6);
+        }
+
+        .card-3d {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: transform 0.4s;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-3d:hover {
+            transform: scale(1.05) rotateY(5deg);
+        }
+
+        .clock {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-link:hover {
+            transform: scale(1.05);
+            color: #ffce00 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CRM E-Commerce</a>
+            <div class="clock text-warning" id="clockDisplay"></div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'base' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'dataset' %}">View Dataset</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'predict_sentiment' %}">Sentiment Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'customer_dashboard' %}">customer_dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'main' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card card-3d text-center p-4">
+                    <h4>View Dataset</h4>
+                    <p>Check out the data insights gathered from users.</p>
+                    <a href="{% url 'dataset' %}" class="btn btn-warning">Explore</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-3d text-center p-4">
+                    <h4>Sentiment Analysis</h4>
+                    <p>Analyze user messages and predict their sentiment.</p>
+                    <a href="{% url 'predict_sentiment' %}" class="btn btn-warning">Predict</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-3d text-center p-4">
+                    <h4>Logout</h4>
+                    <p>Safely log out from the system.</p>
+                    <a href="{% url 'main' %}" class="btn btn-warning">Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 glass-effect">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('clockDisplay').innerText = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>

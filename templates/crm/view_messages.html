@@ -1,0 +1,16 @@
+{% extends 'permitter/permitter_base.html' %}
+{% block content %}
+<h2>Customer Messages</h2>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Customer</th><th>Message</th><th>Sentiment</th>
+    </tr>
+    {% for m in messages %}
+    <tr>
+        <td>{{ m.customer.name }}</td>
+        <td>{{ m.message_text }}</td>
+        <td>{{ m.sentiment_label }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'permitter/permitter_base.html' %}
+{% block content %}
+<h2>Customer Details</h2>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Name</th><th>Email</th><th>Gender</th><th>Age</th><th>Location</th><th>Signup Date</th><th>Last Active</th><th>Total Spent</th><th>Churned?</th>
+    </tr>
+    {% for c in customers %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.gender }}</td>
+        <td>{{ c.age }}</td>
+        <td>{{ c.location }}</td>
+        <td>{{ c.signup_date }}</td>
+        <td>{{ c.last_active_date }}</td>
+        <td>{{ c.total_spent }}</td>
+        <td>{{ c.is_churned }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'permitter/permitter_base.html' %}
+{% block content %}
+<h2>Churn Prediction Features</h2>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Customer</th><th>Login Freq</th><th>Avg Session Time</th><th>Complaints</th><th>Last Purchase (days)</th><th>Total Purchases</th>
+    </tr>
+    {% for c in churn_data %}
+    <tr>
+        <td>{{ c.customer.name }}</td>
+        <td>{{ c.login_frequency }}</td>
+        <td>{{ c.avg_session_time }}</td>
+        <td>{{ c.complaints_raised }}</td>
+        <td>{{ c.last_purchase_days_ago }}</td>
+        <td>{{ c.total_purchases }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

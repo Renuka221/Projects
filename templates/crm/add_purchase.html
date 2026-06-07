@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<style>
+    h2 {
+        text-align: center;
+        margin-top: 30px;
+        font-family: 'Segoe UI', sans-serif;
+        color: #2c3e50;
+    }
+
+    form {
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 25px;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    @media screen and (max-width: 600px) {
+        form {
+            padding: 20px;
+            margin: 20px;
+        }
+    }
+</style>
+
+<h2>Add Product Purchase</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

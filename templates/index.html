@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRM Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+    }
+
+    .navbar {
+      display: flex;
+      background: linear-gradient(145deg, #1a1a1a, #2b2b2b);
+      padding: 10px 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      perspective: 1000px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      padding: 12px 18px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #222;
+      border-radius: 8px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+      transform-style: preserve-3d;
+    }
+
+    .navbar a:hover {
+      transform: rotateX(15deg) scale(1.05);
+      box-shadow: 0 15px 25px rgba(0, 255, 255, 0.4);
+      background: #0e76a8;
+    }
+
+    .navbar a.active {
+      background: #0e76a8;
+      font-weight: bold;
+      transform: scale(1.1);
+    }
+
+    .container {
+      padding: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="{% url 'index' %}">Home</a>
+    <a href="/add-customer/">Add Customer</a>
+    <a href="/add-message/">Add Message</a>
+    <a href="/add-churn/">Add Churn Feature</a>
+    <a href="/add-purchase/">Add Purchase</a>
+    <a href="{% url 'main' %}">Logout</a>
+  </div>
+
+  <div class="container">
+    <h1>🚀 Welcome to the AI-Powered CRM Dashboard</h1>
+  </div>
+{% block content %}
+{% endblock %}
+  <script>
+    // Highlight the current page link (optional)
+    const links = document.querySelectorAll('.navbar a');
+    const current = window.location.pathname;
+    links.forEach(link => {
+      if (link.getAttribute('href') === current) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+
+</body>
+</html>

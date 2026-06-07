@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<style>
+    h2 {
+        text-align: center;
+        margin-top: 30px;
+        font-family: Arial, sans-serif;
+        color: #2c3e50;
+    }
+
+    form {
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 25px;
+        background-color: #f1f1f1;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    form input,
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: #fff;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    @media screen and (max-width: 600px) {
+        form {
+            padding: 20px;
+        }
+    }
+</style>
+
+<h2>Add Message</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+
+
+{% endblock %}

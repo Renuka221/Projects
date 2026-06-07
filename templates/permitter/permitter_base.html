@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Content Viewer</title>
+<style>
+        body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #8b66e0;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #2c3e50;
+    padding: 12px 24px;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ecf0f1;
+    margin-right: auto;
+}
+
+.navbar a, .navbar select {
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    margin: 4px 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar a:hover, .navbar select:hover {
+    background-color: #f09af8;
+    cursor: pointer;
+}
+
+.navbar label {
+    color: #ecf0f1;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.navbar select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #3b4b5c;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    appearance: none;
+}
+
+.navbar select option {
+    color: black;
+    background-color: white;
+}
+
+.toggle-btn {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background-color: #3498db;
+    cursor: pointer;
+}
+
+.navbar a.active {
+    background-color: #1abc9c;
+    font-weight: bold;
+    color: white !important;
+}
+
+.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+.dark-mode .navbar {
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .navbar a,
+.dark-mode .navbar select,
+.dark-mode .navbar label {
+    color: #e0e0e0;
+    background-color: #2a2a2a;
+}
+
+.dark-mode .navbar a.active {
+    background-color: #16a085;
+}
+
+.dark-mode .toggle-btn {
+    background-color: #444;
+}
+
+.dark-mode .toggle-btn:hover {
+    background-color: #555;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .nav-title {
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%; /* This helps in responsive view */
+}
+
+    .navbar a, .navbar select, .toggle-btn {
+        width: 100%;
+        margin: 6px 0;
+        padding-left: 12px;
+    }
+}
+
+h1 {
+    font-size: 28px;
+    margin-top: 20px;
+    color: #2c3e50;
+}
+
+.dark-mode h1 {
+    color: #ffffff;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-title">Customer Relationship Management(CRM)</div>
+        <a href="#" class="nav-link active">Home</a>
+        <a href="{% url 'view_users' %}" class="nav-link">View users</a>
+
+        <label for="view-menu">View:</label>
+        <select id="view-menu">
+            <option value="">-- Select --</option>
+            <option value="{% url 'view_customers' %}">View Customers</option>
+            <option value="{% url 'view_messages' %}">View Messages</option>
+            <option value="{% url 'view_purchases' %}">View Purchases</option>
+            <option value="{% url 'view_churn' %}">View Churns</option>
+        </select>
+
+        <a href="{% url 'main' %}" class="nav-link">Logout</a>
+
+        <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Theme</button>
+    </div>
+
+    <!-- Page Content -->
+    <div style="padding: 20px;">
+        <h1>Welcome to the Customer Relationship Management(CRM)</h1>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <script>
+        // Navigate on dropdown change
+        document.getElementById('view-menu').addEventListener('change', function() {
+            const url = this.value;
+            if (url) {
+                window.location.href = url;
+            }
+        });
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Highlight the active link (Optional logic for SPA-style)
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

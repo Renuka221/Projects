@@ -1,0 +1,220 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+
+<style>
+body {
+    background: #f4f6f9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dashboard-container {
+    width: 70%;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+form label {
+    font-weight: bold;
+    color: #34495e;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+form input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(52,152,219,0.5);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.result-table th {
+    background: #3498db;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.result-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.result-table tr:hover {
+    background-color: #eaf2f8;
+}
+
+.section-title {
+    margin-top: 40px;
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Risk of Churn Colors */
+.risk-low {
+    color: green;
+    font-weight: bold;
+}
+.risk-medium {
+    color: orange;
+    font-weight: bold;
+}
+.risk-high {
+    color: red;
+    font-weight: bold;
+}
+
+/* Engagement Level Colors */
+.engagement-low {
+    color: red;
+    font-weight: bold;
+}
+.engagement-medium {
+    color: orange;
+    font-weight: bold;
+}
+.engagement-high {
+    color: green;
+    font-weight: bold;
+}
+
+/* Optional icons for quick visual cues */
+.icon {
+    margin-right: 5px;
+}
+</style>
+
+<div class="dashboard-container">
+
+    <h2>Customer Prediction Dashboard</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Customer Name:</label>
+        <input type="text" name="customer_name" placeholder="Enter Customer Name" required>
+
+        <label>Recommended Offer:</label>
+        <input type="text" name="recommended_offer" placeholder="Enter Recommended Offer" required>
+
+        <label>Purchase Probability (%):</label>
+        <input type="number" name="purchase_probability" placeholder="Enter Probability (0-100)" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+    <!-- Customer Info Table -->
+    <div class="section-title">Customer Details & Product Recommendation</div>
+    <table class="result-table">
+        <tr>
+            <th>Customer Name</th>
+            <td style="color: black;">{{ result.customer_name }}</td>
+        </tr>
+        <tr>
+            <th>Customer Type</th>
+            <td style="color: black;">{{ result.customer_type }}</td>
+        </tr>
+        <tr>
+            <th>Purchase Probability</th>
+            <td style="color: black;">{{ result.purchase_probability }}%</td>
+        </tr>
+        <tr>
+            <th>Next Likely Product</th>
+            <td style="color: black;">{{ result.next_product }}</td>
+        </tr>
+        <tr>
+            <th>Recommended Offer</th>
+            <td style="color: black;">{{ result.recommended_offer }}</td>
+        </tr>
+        <tr>
+            <th>Risk of Churn</th>
+            <td class="
+                {% if result.risk == 'Low' %}risk-low{% endif %}
+                {% if result.risk == 'Medium' %}risk-medium{% endif %}
+                {% if result.risk == 'High' %}risk-high{% endif %}
+            ">
+                {% if result.risk == 'Low' %}✅{% elif result.risk == 'Medium' %}⚠️{% else %}❌{% endif %}
+                {{ result.risk }}
+            </td>
+        </tr>
+        <tr>
+            <th>Preferred Category</th>
+            <td style="color: black;">{{ result.category }}</td>
+        </tr>
+    </table>
+
+    <!-- Customer Behavior Prediction Table -->
+    <div class="section-title">Customer Behavior Prediction</div>
+    <table class="result-table">
+        <tr>
+            <th>Will Purchase in Next Visit</th>
+            <td style="color: black;">{{ result.will_purchase_next }}</td>
+        </tr>
+        <tr>
+            <th>Chance of Leaving Platform</th>
+            <td style="color: black;">{{ result.chance_of_leaving }}</td>
+        </tr>
+        <tr>
+            <th>Customer Engagement Level</th>
+            <td class="
+                {% if result.engagement_level == 'Low' %}engagement-low{% endif %}
+                {% if result.engagement_level == 'Medium' %}engagement-medium{% endif %}
+                {% if result.engagement_level == 'High' %}engagement-high{% endif %}
+            ">
+                {% if result.engagement_level == 'High' %}⭐{% elif result.engagement_level == 'Medium' %}⚡{% else %}🔴{% endif %}
+                {{ result.engagement_level }}
+            </td>
+        </tr>
+        <tr>
+            <th>Best Time to Send Offer</th>
+            <td style="color: black;">{{ result.best_time_offer }}</td>
+        </tr>
+    </table>
+    {% endif %}
+
+</div>
+{% endblock %}
